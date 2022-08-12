@@ -1,6 +1,7 @@
 package gui.controllers;
 
 import gui.App;
+import gui.shapes.CustomRectangle;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
@@ -15,11 +16,13 @@ public class EntityController {
 
   @FXML
   protected void onDrawButtonClick() {
-    pane.getChildren().add(createShape());
+    CustomRectangle rect = new CustomRectangle(100, 100, 200, 100);
+    DragController dragController = new DragController(rect, true);
+    pane.getChildren().addAll(rect, rect.getText().get(0));
   }
 
   public Node createShape() {
-    Rectangle rect = new Rectangle(100, 100, 200, 100);
+    CustomRectangle rect = new CustomRectangle(100, 100, 200, 100);
     DragController dragController = new DragController(rect, true);
     return rect;
   }

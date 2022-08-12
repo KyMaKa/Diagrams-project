@@ -1,5 +1,7 @@
 package gui.controllers;
 
+import gui.shapes.CustomRectangle;
+import java.util.ArrayList;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
@@ -7,6 +9,8 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
+
 public class DragController {
   private final Node target;
   private double anchorX;
@@ -49,6 +53,7 @@ public class DragController {
       if (cycleStatus != INACTIVE) {
         target.setTranslateX(event.getSceneX() - anchorX);
         target.setTranslateY(event.getSceneY() - anchorY);
+        translateChildren();
       }
     };
     commitPositionOnRelease = event -> {
@@ -59,9 +64,31 @@ public class DragController {
         //clear changes from TranslateX and TranslateY
         target.setTranslateX(0);
         target.setTranslateY(0);
+        moveChildren();
       }
     };
   }
+
+  private void translateChildren() {
+    CustomRectangle rect = (CustomRectangle) target;
+    ArrayList<Text> texts = rect.getText();
+    for (Text t : texts) {
+      t.setTranslateX(rect.getTranslateX());
+      t.setTranslateY(rect.getTranslateY());
+    }
+  }
+
+  private void moveChildren() {
+    CustomRectangle rect = (CustomRectangle) target;
+    ArrayList<Text> texts = rect.getText();
+    for (Text t : texts) {
+      t.setLayoutX(rect.getLayoutX());
+      t.setLayoutY(rect.getLayoutY());
+      t.setTranslateX(0);
+      t.setTranslateY(0);
+    }
+  }
+
   public void createDraggableProperty() {
     isDraggable = new SimpleBooleanProperty();
     isDraggable.addListener((observable, oldValue, newValue) -> {
