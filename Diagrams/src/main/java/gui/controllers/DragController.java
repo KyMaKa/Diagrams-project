@@ -4,19 +4,20 @@ import gui.shapes.CustomRectangle;
 import java.util.ArrayList;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
 public class DragController {
   private final Node target;
-  private double anchorX;
-  private double anchorY;
-  private double mouseOffsetFromNodeZeroX;
-  private double mouseOffsetFromNodeZeroY;
+
+  private double dragX;
+
+  private double dragY;
+
   private EventHandler<MouseEvent> setAnchor;
   private EventHandler<MouseEvent> updatePositionOnDrag;
   private EventHandler<MouseEvent> commitPositionOnRelease;
@@ -35,57 +36,40 @@ public class DragController {
     this.isDraggable.set(isDraggable);
   }
   private void createHandlers() {
-    setAnchor = event -> {
-      if (event.isPrimaryButtonDown()) {
-        cycleStatus = ACTIVE;
-        anchorX = event.getSceneX();
-        anchorY = event.getSceneY();
-        mouseOffsetFromNodeZeroX = event.getX();
-        mouseOffsetFromNodeZeroY = event.getY();
-      }
-      if (event.isSecondaryButtonDown()) {
-        cycleStatus = INACTIVE;
-        target.setTranslateX(0);
-        target.setTranslateY(0);
-      }
+
+    setAnchor = mouseEvent -> {
+      dragX = target.getLayoutX() - mouseEvent.getSceneX();
+      dragY = target.getLayoutY() - mouseEvent.getSceneY();
+      target.setCursor(Cursor.MOVE);
     };
-    updatePositionOnDrag = event -> {
-      if (cycleStatus != INACTIVE) {
-        target.setTranslateX(event.getSceneX() - anchorX);
-        target.setTranslateY(event.getSceneY() - anchorY);
-        translateChildren();
-      }
+
+    commitPositionOnRelease = mouseEvent -> {
+      target.setCursor(Cursor.HAND);
     };
-    commitPositionOnRelease = event -> {
-      if (cycleStatus != INACTIVE) {
-        //commit changes to LayoutX and LayoutY
-        target.setLayoutX(event.getSceneX() - mouseOffsetFromNodeZeroX);
-        target.setLayoutY(event.getSceneY() - mouseOffsetFromNodeZeroY);
-        //clear changes from TranslateX and TranslateY
-        target.setTranslateX(0);
-        target.setTranslateY(0);
-        moveChildren();
-      }
+
+    updatePositionOnDrag = mouseEvent -> {
+      target.setLayoutX(mouseEvent.getSceneX() + dragX);
+      target.setLayoutY(mouseEvent.getSceneY() + dragY);
+      //moveChildren((CustomRectangle) target);
     };
+
+    target.setOnMouseEntered(mouseEvent -> {
+      target.setCursor(Cursor.HAND);
+    });
+
+
   }
 
-  private void translateChildren() {
-    CustomRectangle rect = (CustomRectangle) target;
-    ArrayList<Text> texts = rect.getText();
-    for (Text t : texts) {
-      t.setTranslateX(rect.getTranslateX());
-      t.setTranslateY(rect.getTranslateY());
-    }
+  private void selectChildren() {
+
+
   }
 
-  private void moveChildren() {
-    CustomRectangle rect = (CustomRectangle) target;
-    ArrayList<Text> texts = rect.getText();
-    for (Text t : texts) {
-      t.setLayoutX(rect.getLayoutX());
-      t.setLayoutY(rect.getLayoutY());
-      t.setTranslateX(0);
-      t.setTranslateY(0);
+  private void moveChildren(CustomRectangle rectangle) {
+    ArrayList<Node> children = rectangle.getChildren();
+    for (Node t : children) {
+      t.setLayoutX(rectangle.getLayoutX());
+      t.setLayoutY(rectangle.getLayoutY());
     }
   }
 

@@ -18,6 +18,7 @@ public class App extends Application {
   public void start(Stage stage) throws IOException {
     FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("hello-view.fxml"));
     Scene scene = new Scene(fxmlLoader.load());
+    scene.getStylesheets().add(getClass().getResource("style.css").toString());
     stage.setTitle("UML diagrams");
     stage.setScene(scene);
     stage.show();

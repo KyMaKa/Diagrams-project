@@ -1,13 +1,11 @@
 package gui.controllers;
 
-import gui.App;
 import gui.shapes.CustomRectangle;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.paint.Color;
 
 public class EntityController {
 
@@ -16,13 +14,16 @@ public class EntityController {
 
   @FXML
   protected void onDrawButtonClick() {
-    CustomRectangle rect = new CustomRectangle(100, 100, 200, 100);
+    CustomRectangle rect = new CustomRectangle(100, 100, 100, 200);
+    rect.setFill(Color.WHITE);
     DragController dragController = new DragController(rect, true);
-    pane.getChildren().addAll(rect, rect.getText().get(0));
+    TextField textField = new TextField();
+    textField.setText("Some text");
+    pane.getChildren().addAll(rect, rect.getChildren().get(0), textField);
   }
 
   public Node createShape() {
-    CustomRectangle rect = new CustomRectangle(100, 100, 200, 100);
+    CustomRectangle rect = new CustomRectangle(100, 100, 50, 200);
     DragController dragController = new DragController(rect, true);
     return rect;
   }
