@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+
+<ToolBar fx:id="toolBar" prefHeight="11.0" prefWidth="1171.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ToolbarController">
+  <Button id="load" mnemonicParsing="false" text="Load" onAction="#onLoadButtonPressed" >
+    <font>
+      <Font name="JetBrains Mono Bold" size="12.0" />
+    </font>
+  </Button>
+  <Button fx:id="save" mnemonicParsing="false" text="Save" onAction="#onSaveButtonPressed" >
+    <font>
+      <Font name="JetBrains Mono Bold" size="12.0" />
+    </font>
+  </Button>
+</ToolBar>
