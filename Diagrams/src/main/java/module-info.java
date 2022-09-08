@@ -10,9 +10,15 @@ module gui {
   requires org.kordamp.bootstrapfx.core;
   requires eu.hansolo.tilesfx;
   requires com.almasb.fxgl.all;
+  requires com.google.gson;
 
   opens gui to javafx.fxml;
   exports gui;
   exports gui.controllers;
   opens gui.controllers to javafx.fxml;
+  opens logic.Entity to com.google.gson;
+  opens logic.Attribute to com.google.gson;
+  opens logic.Relationship to com.google.gson;
+  opens logic.Annotations to com.google.gson;
+  opens logic.Types to com.google.gson;
 }
