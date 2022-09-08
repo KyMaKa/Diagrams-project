@@ -5,40 +5,42 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
-import javafx.beans.binding.*;
 
 public class CustomRectangle extends Rectangle {
 
-  private ArrayList<Node> texts;
+  private ArrayList<Node> elements;
 
-  private DoubleBinding centerXBinding = new DoubleBinding() {
-    {
-
-      bind(xProperty(), widthProperty());
-
-    }
-    @Override
-    protected double computeValue() {
-      return getLayoutX() + getWidth() / 2;
-    }
-  };
+  private String placeholder = "Some text";
 
   public CustomRectangle(double x, double y, double width, double height) {
     this(width, height);
-    setX(x);
-    setY(y);
+    setLayoutX(x);
+    setLayoutY(y);
     TextField text = new TextField();
-    this.texts = new ArrayList<>();
-    text.setLayoutX(this.getX());
-    text.setLayoutY(this.getY());
-    text.setText("Some text");
+    this.elements = new ArrayList<>();
+    text.setLayoutX(x);
+    text.setLayoutY(y);
+    text.setText(placeholder);
     text.setAlignment(Pos.CENTER);
 
-    text.layoutXProperty().bind(this.layoutXProperty().add(this.getWidth() / 2));
-    text.layoutYProperty().bind(this.layoutYProperty().add(100));
-    texts.add(text);
+    double lineXend = x + width;
+    double lineY = 20.0;
+    Line underName = new Line();
+    underName.setStartX(x);
+    underName.setStartY(lineY);
+    underName.setEndX(lineXend);
+    underName.setEndY(lineY);
+    underName.setFill(Color.BLACK);
+
+    text.layoutXProperty().bind(this.layoutXProperty().subtract(text.getLayoutBounds().getMinX()));
+    text.layoutYProperty().bind(this.layoutYProperty().subtract(text.getLayoutBounds().getMinY()));
+    underName.layoutXProperty().bind(this.layoutXProperty().subtract(underName.getLayoutBounds().getMinX()));
+    underName.layoutYProperty().bind(this.layoutYProperty().subtract(underName.getLayoutBounds().getMinY()).add(lineY));
+
+    elements.add(text);
+    elements.add(underName);
   }
 
   public CustomRectangle(double width, double height) {
@@ -48,7 +50,7 @@ public class CustomRectangle extends Rectangle {
 
   private void addText() {
     TextField text = new TextField();
-    this.texts.add(text);
+    this.elements.add(text);
     text.setLayoutX(this.getX());
     text.setLayoutY(this.getY());
     text.setText("Some text");
@@ -56,6 +58,6 @@ public class CustomRectangle extends Rectangle {
   }
 
   public ArrayList<Node> getChildren() {
-    return texts;
+    return elements;
   }
 }
