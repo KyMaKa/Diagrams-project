@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
@@ -25,9 +26,9 @@ public class DrawController {
   @FXML
   protected void onDrawButtonClick() {
 
-    CustomRectangle rect = new CustomRectangle(100, 100, 100, 200);
+    CustomRectangle rect = new CustomRectangle(100, 100, 150, 125);
     rect.setFill(Color.WHITE);
-    DragController dragController = new DragController(rect, true);
+    new DragController(rect, true);
 
     pane.getChildren().add(rect);
     for (Node n : rect.getChildren())
