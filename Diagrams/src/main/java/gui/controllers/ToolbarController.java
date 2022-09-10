@@ -9,10 +9,14 @@ import java.io.Reader;
 import java.io.Writer;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToolBar;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import logic.Entity.Entity;
@@ -66,7 +70,7 @@ public class ToolbarController {
     }
 
     CustomRectangle rect = new CustomRectangle(entity.getPosX(), entity.getPosY(), 100, 200);
-    rect.setFill(Color.WHITE);
+    rect.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
     DragController dragController = new DragController(rect, true);
 
     pane.getChildren().add(rect);
