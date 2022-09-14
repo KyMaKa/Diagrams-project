@@ -34,7 +34,6 @@ public class DrawController {
     rect.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY,
         Insets.EMPTY)));
     new DragController(rect, true);
-
     pane.getChildren().add(rect);
 /*    for (Node n : rect.getChildren())
       pane.getChildren().add(n);*/
