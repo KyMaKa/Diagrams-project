@@ -7,6 +7,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
+import java.util.LinkedList;
+import java.util.List;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -19,6 +21,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import logic.Attribute.Attribute;
 import logic.Entity.Entity;
 
 public class ToolbarController {
@@ -48,8 +51,16 @@ public class ToolbarController {
     Entity entity = new Entity(textField.getText());
     entity.setPosX(node.getLayoutX());
     entity.setPosY(node.getLayoutY());
+    entity.setHeight(node.getHeight());
+    entity.setWidth(node.getWidth());
+    List<Attribute> attributes = new LinkedList<>();
+    for (TextField attr : node.getAttributes()) {
+      Attribute attribute = new Attribute();
+      attribute.setName(attr.getText());
+      attributes.add(attribute);
+    }
 
-    System.out.println(node.getLayoutX());
+    entity.setAttributes(attributes);
 
     Gson g = new Gson();
 
@@ -68,14 +79,19 @@ public class ToolbarController {
     try (Reader reader = new FileReader("project1.json")) {
       entity = g.fromJson(reader, Entity.class);
     }
-
-    CustomRectangle rect = new CustomRectangle(entity.getPosX(), entity.getPosY(), 100, 200);
+    CustomRectangle rect = new CustomRectangle(entity.getPosX(), entity.getPosY(), entity.getWidth(), entity.getHeight());
+    rect.setName(entity.getName());
     rect.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-    DragController dragController = new DragController(rect, true);
+    new DragController(rect, true);
+
+    for (Attribute attr : entity.getAttributes()) {
+      rect.addText(attr.getName());
+    }
 
     pane.getChildren().add(rect);
-    for (Node n : rect.getChildren())
-      pane.getChildren().add(n);
+
+    /*for (Node n : rect.getChildren())
+      pane.getChildren().add(n);*/
 
   }
 
