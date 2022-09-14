@@ -1,60 +1,59 @@
 package gui.shapes;
 
-import java.util.ArrayList;
-import javafx.event.EventHandler;
+import java.util.LinkedList;
+import java.util.List;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
 
-//TODO: rework to pane(StackPane)
 public class CustomRectangle extends Pane {
 
-  private String placeholder = "Entity";
+  private Button addAttrButton;
 
-  private Button addNewAttribute;
+  private final TextField name = new TextField("Entity");
 
   private int attributeY = 20;
   private Line secondLine;
+
+  private final List<TextField> attributes = new LinkedList<>();
 
   public CustomRectangle(double x, double y, double width, double height) {
     this(width, height);
     this.setPrefSize(width, height);
     this.setLayoutX(x);
     this.setLayoutY(y);
-    this.setPadding(new Insets(10,0,10,0));
-    TextField name = new TextField();
+    this.setPadding(new Insets(10, 0, 10, 0));
     name.setLayoutX(0);
     name.setLayoutY(0);
-    name.setText(placeholder);
     name.setAlignment(Pos.CENTER);
 
-    double lineXend = /*x + */width;
-    double lineY = 20.0;
+    double tst = 6.25;
+    double lineY = 20;
     Line underName = new Line();
     underName.setStartX(0);
     underName.setStartY(20);
-    underName.setEndX(lineXend);
+    underName.setEndX(width);
     underName.setEndY(20);
     underName.setFill(Color.BLACK);
+
     secondLine = new Line();
     secondLine.setStartX(0);
-    secondLine.setStartY(lineY * 4);
-    secondLine.setEndX(lineXend);
-    secondLine.setEndY(lineY * 4);
+    double sLineY = lineY * 4 + (20 * (height / lineY - tst));
+    secondLine.setStartY(sLineY);
+    secondLine.setEndX(width);
+    secondLine.setEndY(sLineY);
 
-    addNewAttribute = new Button();
-    addNewAttribute.setLayoutX((width) / 2 - 7);
-    addNewAttribute.setLayoutY(55);
-    addNewAttribute.setOnMouseClicked(mouseEvent -> addText("attribute"));
+    addAttrButton = new Button();
+    addAttrButton.setLayoutX((width) / 2 - 7);
+    addAttrButton.setLayoutY(lineY * 2.75+ (20 * (height / lineY - tst)));
+    addAttrButton.setOnMouseClicked(mouseEvent -> addText("attribute"));
 
     //name.layoutXProperty().bind(this.layoutXProperty().subtract(name.getLayoutBounds().getMinX()));
     //name.layoutYProperty().bind(this.layoutYProperty().subtract(name.getLayoutBounds().getMinY()));
@@ -66,7 +65,7 @@ public class CustomRectangle extends Pane {
     this.getChildren().add(name);
     this.getChildren().add(underName);
     this.getChildren().add(secondLine);
-    this.getChildren().add(addNewAttribute);
+    this.getChildren().add(addAttrButton);
   }
 
   public CustomRectangle(double width, double height) {
@@ -74,14 +73,17 @@ public class CustomRectangle extends Pane {
     setHeight(height);
   }
 
-  private void addText(String input) {
+  public void addText(String input) {
     TextField text = new TextField(input);
-    text.setLayoutX(this.getWidth() / 2 - 14);
+    text.setAlignment(Pos.CENTER);
+    //text.setLayoutX(this.getWidth() / 2 - 15);
     text.setLayoutY(attributeY);
     attributeY += 20;
     this.getChildren().add(text);
-    if (this.addNewAttribute.getLayoutBounds().contains(text.getLayoutBounds())) {
-      this.addNewAttribute.relocate(this.addNewAttribute.getLayoutX(), this.addNewAttribute.getLayoutY() + 20);
+    this.attributes.add(text);
+    if (isOverlapping(text)) {
+      this.addAttrButton.relocate(this.addAttrButton.getLayoutX(),
+          this.addAttrButton.getLayoutY() + 20);
       this.setPrefSize(this.getWidth(), this.getHeight() + 20);
       this.secondLine.setStartY(this.secondLine.getStartY() + 20);
       this.secondLine.setEndY(this.secondLine.getEndY() + 20);
@@ -89,10 +91,19 @@ public class CustomRectangle extends Pane {
     }
   }
 
+  private boolean isOverlapping(Node other) {
+    return (this.addAttrButton.getLayoutY() - other.getLayoutY() < 35);
+  }
 
+  public void setName(String name) {
+    this.name.setText(name);
+  }
 
-  public Button getAddNewAttribute() {
-    return this.addNewAttribute;
+  public Button getAddAttrButton() {
+    return this.addAttrButton;
+  }
 
+  public List<TextField> getAttributes() {
+    return this.attributes;
   }
 }
