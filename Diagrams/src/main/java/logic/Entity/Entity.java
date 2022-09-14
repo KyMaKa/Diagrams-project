@@ -1,5 +1,6 @@
 package logic.Entity;
 
+import java.util.List;
 import logic.Attribute.Attribute;
 import logic.Relationship.Relationship;
 
@@ -11,13 +12,33 @@ public class Entity {
 
   private String name;
 
-  private Attribute[] attributes;
+  private List<Attribute> attributes;
 
   private Relationship[] relations;
 
   private double posX;
 
   private double posY;
+
+  private double width;
+
+  private double height;
+
+  public double getWidth() {
+    return width;
+  }
+
+  public void setWidth(double width) {
+    this.width = width;
+  }
+
+  public double getHeight() {
+    return height;
+  }
+
+  public void setHeight(double height) {
+    this.height = height;
+  }
 
   public double getPosX() {
     return posX;
@@ -43,11 +64,11 @@ public class Entity {
     this.name = name;
   }
 
-  public Attribute[] getAttributes() {
+  public List<Attribute> getAttributes() {
     return attributes;
   }
 
-  public void setAttributes(Attribute[] attributes) {
+  public void setAttributes(List<Attribute> attributes) {
     this.attributes = attributes;
   }
 
