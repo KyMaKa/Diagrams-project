@@ -21,4 +21,5 @@ module gui {
   opens logic.Relationship to com.google.gson;
   opens logic.Annotations to com.google.gson;
   opens logic.Types to com.google.gson;
+  opens logic.Objects to com.google.gson;
 }

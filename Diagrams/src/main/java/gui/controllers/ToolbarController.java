@@ -9,6 +9,8 @@ import java.io.Reader;
 import java.io.Writer;
 import java.util.LinkedList;
 import java.util.List;
+import javafx.scene.shape.Circle;
+import logic.Objects.Objects;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -45,27 +47,29 @@ public class ToolbarController {
   public void onSaveButtonPressed() throws IOException {
 
     ObservableList<Node> children = pane.getChildren();
+    Objects objects = new Objects();
+    for (Node n : children) {
+      CustomRectangle node = (CustomRectangle) n;
+      String name = node.getName();
+      Entity entity = new Entity(name);
+      entity.setPosX(node.getLayoutX());
+      entity.setPosY(node.getLayoutY());
+      entity.setHeight(node.getHeight());
+      entity.setWidth(node.getWidth());
+      List<Attribute> attributes = new LinkedList<>();
+      for (TextField attr : node.getAttributes()) {
+        Attribute attribute = new Attribute();
+        attribute.setName(attr.getText());
+        attributes.add(attribute);
+      }
 
-    CustomRectangle node = (CustomRectangle) children.get(0);
-    TextField textField = (TextField) node.getChildren().get(0);
-    Entity entity = new Entity(textField.getText());
-    entity.setPosX(node.getLayoutX());
-    entity.setPosY(node.getLayoutY());
-    entity.setHeight(node.getHeight());
-    entity.setWidth(node.getWidth());
-    List<Attribute> attributes = new LinkedList<>();
-    for (TextField attr : node.getAttributes()) {
-      Attribute attribute = new Attribute();
-      attribute.setName(attr.getText());
-      attributes.add(attribute);
+      entity.setAttributes(attributes);
+      objects.addObject(entity);
     }
-
-    entity.setAttributes(attributes);
-
     Gson g = new Gson();
 
     try (Writer writer = new FileWriter("project1.json")) {
-      g.toJson(entity, writer);
+      g.toJson(objects, writer);
     }
 
   }
@@ -74,24 +78,26 @@ public class ToolbarController {
   public void onLoadButtonPressed() throws IOException {
 
     Gson g = new Gson();
-    Entity entity;
+    Objects objects;
 
     try (Reader reader = new FileReader("project1.json")) {
-      entity = g.fromJson(reader, Entity.class);
+      objects = g.fromJson(reader, Objects.class);
     }
-    CustomRectangle rect = new CustomRectangle(entity.getPosX(), entity.getPosY(), entity.getWidth(), entity.getHeight());
-    rect.setName(entity.getName());
-    rect.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-    new DragController(rect, true);
+    List<Entity> entities = objects.getObjects();
+    for (Entity entity : entities) {
+      CustomRectangle rect = new CustomRectangle(entity.getPosX(), entity.getPosY(),
+          entity.getWidth(), entity.getHeight());
+      rect.setName(entity.getName());
+      rect.setBackground(
+          new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+      new DragController(rect, true);
 
-    for (Attribute attr : entity.getAttributes()) {
-      rect.addText(attr.getName());
+      for (Attribute attr : entity.getAttributes()) {
+        rect.addText(attr.getName());
+      }
+
+      pane.getChildren().add(rect);
     }
-
-    pane.getChildren().add(rect);
-
-    /*for (Node n : rect.getChildren())
-      pane.getChildren().add(n);*/
 
   }
 

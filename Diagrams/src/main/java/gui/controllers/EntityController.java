@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToolBar;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -31,6 +32,12 @@ public class EntityController {
   public void initialize(){
     drawController.setPane(this.pane);
     toolbarController.setPane(this.pane);
+  }
+
+  public void addLine(MouseEvent mouseEvent) {
+    Node n = (Node) mouseEvent.getSource();
+    System.out.println(n.getParent());
+    this.pane.getEventDispatcher();
   }
 
 }

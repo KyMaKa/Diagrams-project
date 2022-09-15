@@ -7,10 +7,12 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 
 public class CustomRectangle extends Pane {
@@ -55,6 +57,12 @@ public class CustomRectangle extends Pane {
     addAttrButton.setLayoutY(lineY * 2.75+ (20 * (height / lineY - tst)));
     addAttrButton.setOnMouseClicked(mouseEvent -> addText("attribute"));
 
+    Circle circle = new Circle();
+    circle.setLayoutX(width);
+    circle.setLayoutY(height / 2);
+    circle.setRadius(5);
+    circle.setOnMouseClicked(this::drawLine);
+
     //name.layoutXProperty().bind(this.layoutXProperty().subtract(name.getLayoutBounds().getMinX()));
     //name.layoutYProperty().bind(this.layoutYProperty().subtract(name.getLayoutBounds().getMinY()));
     //underName.layoutXProperty().bind(this.layoutXProperty().subtract(underName.getLayoutBounds().getMinX()));
@@ -62,6 +70,7 @@ public class CustomRectangle extends Pane {
     //secondLine.layoutXProperty().bind(this.layoutXProperty().subtract(secondLine.getLayoutBounds().getMinX()));
     //secondLine.layoutYProperty().bind(this.layoutYProperty().subtract(secondLine.getLayoutBounds().getMinY()).add(lineY * 4));
 
+    this.getChildren().add(circle);
     this.getChildren().add(name);
     this.getChildren().add(underName);
     this.getChildren().add(secondLine);
@@ -71,6 +80,12 @@ public class CustomRectangle extends Pane {
   public CustomRectangle(double width, double height) {
     setWidth(width);
     setHeight(height);
+  }
+
+  public void drawLine(MouseEvent mouseEvent) {
+    Node n = (Node) mouseEvent.getSource();
+    System.out.println(n.getParent());
+
   }
 
   public void addText(String input) {
@@ -97,6 +112,10 @@ public class CustomRectangle extends Pane {
 
   public void setName(String name) {
     this.name.setText(name);
+  }
+
+  public String getName() {
+    return this.name.getText();
   }
 
   public Button getAddAttrButton() {

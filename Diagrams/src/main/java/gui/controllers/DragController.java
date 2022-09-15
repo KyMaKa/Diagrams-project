@@ -60,19 +60,6 @@ public class DragController {
 
   }
 
-  private void selectChildren() {
-
-
-  }
-
-/*  private void moveChildren(CustomRectangle rectangle) {
-    ArrayList<Node> children = rectangle.getChildren();
-    for (Node t : children) {
-      t.setLayoutX(rectangle.getLayoutX());
-      t.setLayoutY(rectangle.getLayoutY());
-    }
-  }*/
-
   public void createDraggableProperty() {
     isDraggable = new SimpleBooleanProperty();
     isDraggable.addListener((observable, oldValue, newValue) -> {
