@@ -41,7 +41,6 @@ public class DrawController {
       this.pane.getChildren().addAll(customLine, customLine.getParentText(), customLine.getChildText());
       source = null;
       connector = null;
-
     }
   };
 

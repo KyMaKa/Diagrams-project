@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import logic.Objects.CustomLine;
 
 public class CustomRectangle extends Pane {
 
@@ -27,6 +28,8 @@ public class CustomRectangle extends Pane {
   private Line secondLine;
 
   private Circle circle;
+
+  private final List<CustomLine> relations = new LinkedList<>();
 
   private final List<TextField> attributes = new LinkedList<>();
 
@@ -91,10 +94,12 @@ public class CustomRectangle extends Pane {
     circle.addEventFilter(MouseEvent.MOUSE_PRESSED, handler);
   }
 
-  public void drawLine(MouseEvent mouseEvent) {
-    Node n = (Node) mouseEvent.getSource();
-    System.out.println(n.getParent());
+  public void addRelation(CustomLine line) {
+    this.relations.add(line);
+  }
 
+  public List<CustomLine> getRelations() {
+    return this.relations;
   }
 
   public void addText(String input) {
