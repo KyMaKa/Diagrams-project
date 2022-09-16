@@ -2,6 +2,8 @@ package gui.shapes;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -23,6 +25,10 @@ public class CustomRectangle extends Pane {
 
   private int attributeY = 20;
   private Line secondLine;
+
+  private Circle circle;
+
+  private EventHandler<MouseEvent> lineEvent = mouseEvent -> {System.out.println("Clicked");};
 
   private final List<TextField> attributes = new LinkedList<>();
 
@@ -57,11 +63,12 @@ public class CustomRectangle extends Pane {
     addAttrButton.setLayoutY(lineY * 2.75+ (20 * (height / lineY - tst)));
     addAttrButton.setOnMouseClicked(mouseEvent -> addText("attribute"));
 
-    Circle circle = new Circle();
+    circle = new Circle();
     circle.setLayoutX(width);
     circle.setLayoutY(height / 2);
     circle.setRadius(5);
-    circle.setOnMouseClicked(this::drawLine);
+
+    //circle.addEventHandler(MouseEvent.MOUSE_PRESSED, lineEvent);
 
     //name.layoutXProperty().bind(this.layoutXProperty().subtract(name.getLayoutBounds().getMinX()));
     //name.layoutYProperty().bind(this.layoutYProperty().subtract(name.getLayoutBounds().getMinY()));
@@ -82,6 +89,11 @@ public class CustomRectangle extends Pane {
     setHeight(height);
   }
 
+  public void setLineEvent(EventHandler<MouseEvent> handler) {
+    this.lineEvent = handler;
+    circle.addEventFilter(MouseEvent.MOUSE_PRESSED, lineEvent);
+  }
+
   public void drawLine(MouseEvent mouseEvent) {
     Node n = (Node) mouseEvent.getSource();
     System.out.println(n.getParent());
@@ -91,6 +103,7 @@ public class CustomRectangle extends Pane {
   public void addText(String input) {
     TextField text = new TextField(input);
     text.setAlignment(Pos.CENTER);
+    text.setPrefWidth(150);
     //text.setLayoutX(this.getWidth() / 2 - 15);
     text.setLayoutY(attributeY);
     attributeY += 20;
