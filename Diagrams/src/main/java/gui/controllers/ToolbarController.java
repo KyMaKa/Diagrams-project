@@ -9,7 +9,6 @@ import java.io.Reader;
 import java.io.Writer;
 import java.util.LinkedList;
 import java.util.List;
-import javafx.scene.shape.Circle;
 import logic.Objects.Objects;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -23,8 +22,8 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import logic.Attribute.Attribute;
-import logic.Entity.Entity;
+import logic.Objects.Attribute;
+import logic.Objects.Entity;
 
 public class ToolbarController {
 
