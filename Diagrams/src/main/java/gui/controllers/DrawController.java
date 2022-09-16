@@ -37,9 +37,9 @@ public class DrawController {
       CustomRectangle tSource = (CustomRectangle) target.getParent();
       Line line = new Line();
       line.setStartX(source.getLayoutX() + connector.getLayoutX());
-      line.setEndX(target.getLayoutX() + target.getLayoutX());
-      line.setStartY(connector.getLayoutY() + connector.getLayoutY());
-      line.setEndY(target.getLayoutY());
+      line.setEndX(tSource.getLayoutX() + target.getLayoutX());
+      line.setStartY(source.getLayoutY() + connector.getLayoutY());
+      line.setEndY(tSource.getLayoutY() + target.getLayoutY());
       this.pane.getChildren().add(line);
       System.out.println("After line addition.");
       source = null;
