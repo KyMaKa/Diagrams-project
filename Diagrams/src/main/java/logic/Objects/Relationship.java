@@ -1,6 +1,5 @@
-package logic.Relationship;
+package logic.Objects;
 
-import logic.Entity.Entity;
 import logic.Types.RelTypes;
 
 public class Relationship {

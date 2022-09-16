@@ -1,4 +1,4 @@
-package logic.Attribute;
+package logic.Objects;
 
 import logic.Types.Annotations;
 import logic.Types.AttTypes;

@@ -1,8 +1,6 @@
-package logic.Entity;
+package logic.Objects;
 
 import java.util.List;
-import logic.Attribute.Attribute;
-import logic.Relationship.Relationship;
 
 public class Entity {
 
