@@ -28,8 +28,6 @@ public class CustomRectangle extends Pane {
 
   private Circle circle;
 
-  private EventHandler<MouseEvent> lineEvent = mouseEvent -> {System.out.println("Clicked");};
-
   private final List<TextField> attributes = new LinkedList<>();
 
   public CustomRectangle(double x, double y, double width, double height) {
@@ -90,8 +88,7 @@ public class CustomRectangle extends Pane {
   }
 
   public void setLineEvent(EventHandler<MouseEvent> handler) {
-    this.lineEvent = handler;
-    circle.addEventFilter(MouseEvent.MOUSE_PRESSED, lineEvent);
+    circle.addEventFilter(MouseEvent.MOUSE_PRESSED, handler);
   }
 
   public void drawLine(MouseEvent mouseEvent) {
