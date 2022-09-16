@@ -1,20 +1,13 @@
 package gui;
 
-import gui.controllers.DragController;
-import gui.controllers.EntityController;
-import java.io.FileWriter;
-import java.io.Writer;
 import java.util.Objects;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import com.google.gson.Gson;
 
 import java.io.IOException;
-import logic.Entity.Entity;
 
 public class App extends Application {
 
