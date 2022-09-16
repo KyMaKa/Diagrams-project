@@ -1,1 +1,76 @@
-{"objects":[{"name":"Entity 2","attributes":[{"name":"2"},{"name":"attribute"}],"posX":686.0,"posY":179.0,"width":150.0,"height":145.0},{"name":"Entity 1","attributes":[{"name":"1"}],"posX":100.0,"posY":100.0,"width":150.0,"height":125.0},{"name":"Entity 4","attributes":[{"name":"4"},{"name":"attribute"},{"name":"attribute"}],"posX":676.0,"posY":400.0,"width":150.0,"height":165.0},{"name":"Entity 3","attributes":[{"name":"3"},{"name":"attribute"},{"name":"attribute"},{"name":"attribute"},{"name":"attribute"},{"name":"attribute"}],"posX":94.0,"posY":345.0,"width":150.0,"height":225.0}]}
+{
+  "objects": [
+    {
+      "name": "Entity 2",
+      "attributes": [
+        {
+          "name": "2"
+        },
+        {
+          "name": "attribute"
+        }
+      ],
+      "posX": 686.0,
+      "posY": 179.0,
+      "width": 150.0,
+      "height": 145.0
+    },
+    {
+      "name": "Entity 1",
+      "attributes": [
+        {
+          "name": "1"
+        }
+      ],
+      "posX": 100.0,
+      "posY": 100.0,
+      "width": 150.0,
+      "height": 125.0
+    },
+    {
+      "name": "Entity 4",
+      "attributes": [
+        {
+          "name": "4"
+        },
+        {
+          "name": "attribute"
+        },
+        {
+          "name": "attribute"
+        }
+      ],
+      "posX": 676.0,
+      "posY": 400.0,
+      "width": 150.0,
+      "height": 165.0
+    },
+    {
+      "name": "Entity 3",
+      "attributes": [
+        {
+          "name": "3"
+        },
+        {
+          "name": "attribute"
+        },
+        {
+          "name": "attribute"
+        },
+        {
+          "name": "attribute"
+        },
+        {
+          "name": "attribute"
+        },
+        {
+          "name": "attribute"
+        }
+      ],
+      "posX": 94.0,
+      "posY": 345.0,
+      "width": 150.0,
+      "height": 225.0
+    }
+  ]
+}
