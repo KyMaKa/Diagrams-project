@@ -78,7 +78,7 @@ public class ToolbarController {
 
     Gson g = new Gson();
     Objects objects;
-
+    this.pane.getChildren().clear();
     try (Reader reader = new FileReader("project1.json")) {
       objects = g.fromJson(reader, Objects.class);
     }
