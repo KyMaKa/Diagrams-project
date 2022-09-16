@@ -1,6 +1,7 @@
 package gui.controllers;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import gui.shapes.CustomRectangle;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -65,7 +66,7 @@ public class ToolbarController {
       entity.setAttributes(attributes);
       objects.addObject(entity);
     }
-    Gson g = new Gson();
+    Gson g = new GsonBuilder().setPrettyPrinting().create();
 
     try (Writer writer = new FileWriter("project1.json")) {
       g.toJson(objects, writer);
