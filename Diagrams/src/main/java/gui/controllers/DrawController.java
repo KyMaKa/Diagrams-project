@@ -32,7 +32,7 @@ public class DrawController {
     if (source == null) {
       connector = target;
       source = (CustomRectangle) target.getParent();
-      System.out.println(connector.getLayoutX());
+      System.out.println("Clicked");
     } else {
       CustomRectangle tSource = (CustomRectangle) target.getParent();
       Line line = new Line();
@@ -40,8 +40,12 @@ public class DrawController {
       line.setEndX(tSource.getLayoutX() + target.getLayoutX());
       line.setStartY(source.getLayoutY() + connector.getLayoutY());
       line.setEndY(tSource.getLayoutY() + target.getLayoutY());
+      line.startXProperty().bind(source.layoutXProperty().add(connector.getLayoutX()));
+      line.startYProperty().bind(source.layoutYProperty().add(connector.getLayoutY()));
+      line.endXProperty().bind(tSource.layoutXProperty().add(target.getLayoutX()));
+      line.endYProperty().bind(tSource.layoutYProperty().add(target.getLayoutY()));
+
       this.pane.getChildren().add(line);
-      System.out.println("After line addition.");
       source = null;
       connector = null;
     }
