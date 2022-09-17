@@ -19,4 +19,5 @@ module gui {
   opens logic.Annotations to com.google.gson;
   opens logic.Types to com.google.gson;
   opens logic.Objects to com.google.gson;
+  opens gui.shapes to com.google.gson;
 }
