@@ -1,76 +1,34 @@
 {
   "objects": [
     {
-      "name": "Entity 2",
-      "attributes": [
-        {
-          "name": "2"
-        },
-        {
-          "name": "attribute"
-        }
-      ],
-      "posX": 686.0,
-      "posY": 179.0,
-      "width": 150.0,
-      "height": 145.0
-    },
-    {
-      "name": "Entity 1",
-      "attributes": [
-        {
-          "name": "1"
-        }
-      ],
+      "name": "1",
+      "attributes": [],
+      "relations": [],
       "posX": 100.0,
       "posY": 100.0,
       "width": 150.0,
       "height": 125.0
     },
     {
-      "name": "Entity 4",
-      "attributes": [
+      "name": "2",
+      "attributes": [],
+      "relations": [
         {
-          "name": "4"
-        },
-        {
-          "name": "attribute"
-        },
-        {
-          "name": "attribute"
+          "child": {
+            "name": "1",
+            "posX": 0.0,
+            "posY": 0.0,
+            "width": 0.0,
+            "height": 0.0
+          },
+          "childX": 150.0,
+          "childY": 62.5
         }
       ],
-      "posX": 676.0,
-      "posY": 400.0,
+      "posX": 90.0,
+      "posY": 301.0,
       "width": 150.0,
-      "height": 165.0
-    },
-    {
-      "name": "Entity 3",
-      "attributes": [
-        {
-          "name": "3"
-        },
-        {
-          "name": "attribute"
-        },
-        {
-          "name": "attribute"
-        },
-        {
-          "name": "attribute"
-        },
-        {
-          "name": "attribute"
-        },
-        {
-          "name": "attribute"
-        }
-      ],
-      "posX": 94.0,
-      "posY": 345.0,
-      "width": 150.0,
-      "height": 225.0
+      "height": 125.0
     }
   ]
 }
