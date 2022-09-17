@@ -27,11 +27,10 @@ public class CustomRectangle extends Pane {
 
   private Connector connector;
 
-  private final List<CustomLine> relations = new LinkedList<>();
 
   private final List<TextField> attributes = new LinkedList<>();
 
-  private final Map<Connector, List<CustomLine>> connectors = new HashMap<>();
+  private final Map<Connector, List<CustomLine>> relations = new HashMap<>();
 
   public CustomRectangle(double x, double y, double width, double height) {
     this(width, height);
@@ -93,25 +92,17 @@ public class CustomRectangle extends Pane {
     setHeight(height);
   }
 
-  public Map<Connector, List<CustomLine>> getConnectors() {
-    return this.connectors;
+  public Map<Connector, List<CustomLine>> getRelations() {
+    return this.relations;
   }
 
   public void addConnector(Connector source, CustomLine target) {
-    this.connectors.get(connector).add(target);
+    this.relations.get(connector).add(target);
   }
 
   public void setLineEvent(EventHandler<MouseEvent> handler) {
     connector.addEventFilter(MouseEvent.MOUSE_PRESSED, handler);
-    this.connectors.put(connector, new LinkedList<>());
-  }
-
-  public void addRelation(CustomLine line) {
-    this.relations.add(line);
-  }
-
-  public List<CustomLine> getRelations() {
-    return this.relations;
+    this.relations.put(connector, new LinkedList<>());
   }
 
   public void addText(String input) {
