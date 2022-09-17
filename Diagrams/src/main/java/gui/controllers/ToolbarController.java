@@ -2,6 +2,8 @@ package gui.controllers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import gui.shapes.Connector;
+import gui.shapes.CustomLine;
 import gui.shapes.CustomRectangle;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -10,6 +12,7 @@ import java.io.Reader;
 import java.io.Writer;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import logic.Objects.Objects;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -25,6 +28,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import logic.Objects.Attribute;
 import logic.Objects.Entity;
+import logic.Objects.Relationship;
 
 public class ToolbarController {
 
@@ -49,22 +53,40 @@ public class ToolbarController {
     ObservableList<Node> children = pane.getChildren();
     Objects objects = new Objects();
     for (Node n : children) {
-      CustomRectangle node = (CustomRectangle) n;
-      String name = node.getName();
-      Entity entity = new Entity(name);
-      entity.setPosX(node.getLayoutX());
-      entity.setPosY(node.getLayoutY());
-      entity.setHeight(node.getHeight());
-      entity.setWidth(node.getWidth());
-      List<Attribute> attributes = new LinkedList<>();
-      for (TextField attr : node.getAttributes()) {
-        Attribute attribute = new Attribute();
-        attribute.setName(attr.getText());
-        attributes.add(attribute);
-      }
+      if (n.getClass() == CustomRectangle.class) {
+        CustomRectangle node = (CustomRectangle) n;
+        String name = node.getName();
+        Entity entity = new Entity(name);
 
-      entity.setAttributes(attributes);
-      objects.addObject(entity);
+        entity.setPosX(node.getLayoutX());
+        entity.setPosY(node.getLayoutY());
+        entity.setHeight(node.getHeight());
+        entity.setWidth(node.getWidth());
+        List<Attribute> attributes = new LinkedList<>();
+        for (TextField attr : node.getAttributes()) {
+          Attribute attribute = new Attribute();
+          attribute.setName(attr.getText());
+          attributes.add(attribute);
+        }
+
+        entity.setAttributes(attributes);
+
+        List<Relationship> relationships = new LinkedList<>();
+        Map<Connector, List<CustomLine>> relations = node.getRelations();
+        relations.forEach((Connector key, List<CustomLine> line) -> {
+          for (CustomLine rel : line) {
+            Relationship relationship = new Relationship();
+            //relationship.setParent(entity);
+            relationship.setChildX(rel.getChildConnector().getLayoutX());
+            relationship.setChildY(rel.getChildConnector().getLayoutY());
+            relationship.setChild(new Entity(rel.getChild().getName()));
+            relationships.add(relationship);
+          }
+        });
+        entity.setRelations(relationships);
+
+        objects.addObject(entity);
+      }
     }
     Gson g = new GsonBuilder().setPrettyPrinting().create();
 
@@ -95,6 +117,7 @@ public class ToolbarController {
       for (Attribute attr : entity.getAttributes()) {
         rect.addText(attr.getName());
       }
+
 
       pane.getChildren().add(rect);
     }
