@@ -12,7 +12,7 @@ public class Entity {
 
   private List<Attribute> attributes;
 
-  private Relationship[] relations;
+  private List<Relationship> relations;
 
   private double posX;
 
@@ -70,11 +70,11 @@ public class Entity {
     this.attributes = attributes;
   }
 
-  public Relationship[] getRelations() {
+  public List<Relationship> getRelations() {
     return relations;
   }
 
-  public void setRelations(Relationship[] relations) {
+  public void setRelations(List<Relationship> relations) {
     this.relations = relations;
   }
 
