@@ -1,4 +1,4 @@
-package logic.Objects;
+package gui.shapes;
 
 import javafx.scene.Node;
 import javafx.scene.shape.Line;
@@ -9,6 +9,26 @@ public class CustomLine extends Line {
   private final Text parentText = new Text("0..1");
 
   private final Text childText = new Text("0..1");
+
+  private CustomRectangle child;
+
+  private Connector childConnector;
+
+  public void setChild(CustomRectangle child) {
+    this.child = child;
+  }
+
+  public CustomRectangle getChild() {
+    return this.child;
+  }
+
+  public void setChildConnector(Connector connector) {
+    this.childConnector = connector;
+  }
+
+  public Connector getChildConnector() {
+    return this.childConnector;
+  }
 
   public CustomLine() {
     this.parentText.layoutXProperty().bind(this.startXProperty().add(10));

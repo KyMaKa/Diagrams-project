@@ -11,6 +11,26 @@ public class Relationship {
 
   private Entity child;
 
+  private double childX;
+
+  private double childY;
+
+  public double getChildX() {
+    return childX;
+  }
+
+  public void setChildX(double childX) {
+    this.childX = childX;
+  }
+
+  public double getChildY() {
+    return childY;
+  }
+
+  public void setChildY(double childY) {
+    this.childY = childY;
+  }
+
   public String getName() {
     return name;
   }

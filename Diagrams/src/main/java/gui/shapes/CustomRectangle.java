@@ -1,8 +1,10 @@
 package gui.shapes;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import java.util.Map;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -10,13 +12,9 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import logic.Objects.CustomLine;
 
 public class CustomRectangle extends Pane {
 
@@ -27,11 +25,13 @@ public class CustomRectangle extends Pane {
   private int attributeY = 20;
   private Line secondLine;
 
-  private Circle circle;
+  private Connector connector;
 
   private final List<CustomLine> relations = new LinkedList<>();
 
   private final List<TextField> attributes = new LinkedList<>();
+
+  private final Map<Connector, List<CustomLine>> connectors = new HashMap<>();
 
   public CustomRectangle(double x, double y, double width, double height) {
     this(width, height);
@@ -64,12 +64,15 @@ public class CustomRectangle extends Pane {
     addAttrButton.setLayoutY(lineY * 2.75+ (20 * (height / lineY - tst)));
     addAttrButton.setOnMouseClicked(mouseEvent -> addText("attribute"));
 
-    circle = new Circle();
-    circle.setLayoutX(width);
-    circle.setLayoutY(height / 2);
-    circle.setRadius(5);
+    connector = new Connector();
+    connector.setLayoutX(width);
+    connector.setLayoutY(height / 2);
+    connector.setRadius(5);
+    connector.setParentName(this.name.getText());
+    connector.setxInParent(connector.getLayoutX());
+    connector.setyInParent(connector.getLayoutY());
 
-    //circle.addEventHandler(MouseEvent.MOUSE_PRESSED, lineEvent);
+    //connector.addEventHandler(MouseEvent.MOUSE_PRESSED, lineEvent);
 
     //name.layoutXProperty().bind(this.layoutXProperty().subtract(name.getLayoutBounds().getMinX()));
     //name.layoutYProperty().bind(this.layoutYProperty().subtract(name.getLayoutBounds().getMinY()));
@@ -78,7 +81,7 @@ public class CustomRectangle extends Pane {
     //secondLine.layoutXProperty().bind(this.layoutXProperty().subtract(secondLine.getLayoutBounds().getMinX()));
     //secondLine.layoutYProperty().bind(this.layoutYProperty().subtract(secondLine.getLayoutBounds().getMinY()).add(lineY * 4));
 
-    this.getChildren().add(circle);
+    this.getChildren().add(connector);
     this.getChildren().add(name);
     this.getChildren().add(underName);
     this.getChildren().add(secondLine);
@@ -90,8 +93,17 @@ public class CustomRectangle extends Pane {
     setHeight(height);
   }
 
+  public Map<Connector, List<CustomLine>> getConnectors() {
+    return this.connectors;
+  }
+
+  public void addConnector(Connector source, CustomLine target) {
+    this.connectors.get(connector).add(target);
+  }
+
   public void setLineEvent(EventHandler<MouseEvent> handler) {
-    circle.addEventFilter(MouseEvent.MOUSE_PRESSED, handler);
+    connector.addEventFilter(MouseEvent.MOUSE_PRESSED, handler);
+    this.connectors.put(connector, new LinkedList<>());
   }
 
   public void addRelation(CustomLine line) {
