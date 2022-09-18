@@ -71,6 +71,8 @@ public class CustomRectangle extends Pane {
     connector.setxInParent(connector.getLayoutX());
     connector.setyInParent(connector.getLayoutY());
 
+    this.relations.put(connector, new LinkedList<>());
+
     //connector.addEventHandler(MouseEvent.MOUSE_PRESSED, lineEvent);
 
     //name.layoutXProperty().bind(this.layoutXProperty().subtract(name.getLayoutBounds().getMinX()));
@@ -97,12 +99,12 @@ public class CustomRectangle extends Pane {
   }
 
   public void addConnector(Connector source, CustomLine target) {
-    this.relations.get(connector).add(target);
+    this.relations.get(source).add(target);
+    System.out.println(relations.containsKey(source));
   }
 
   public void setLineEvent(EventHandler<MouseEvent> handler) {
     connector.addEventFilter(MouseEvent.MOUSE_PRESSED, handler);
-    this.relations.put(connector, new LinkedList<>());
   }
 
   public void addText(String input) {
@@ -120,7 +122,7 @@ public class CustomRectangle extends Pane {
       this.setPrefSize(this.getWidth(), this.getHeight() + 20);
       this.secondLine.setStartY(this.secondLine.getStartY() + 20);
       this.secondLine.setEndY(this.secondLine.getEndY() + 20);
-
+      this.connector.setLayoutY(this.getPrefHeight() / 2);
     }
   }
 
