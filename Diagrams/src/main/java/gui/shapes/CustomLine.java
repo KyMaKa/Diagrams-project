@@ -10,9 +10,11 @@ public class CustomLine extends Line {
 
   private final Text childText = new Text("0..1");
 
+
   private CustomRectangle child;
 
   private Connector childConnector;
+
 
   public void setChild(CustomRectangle child) {
     this.child = child;
