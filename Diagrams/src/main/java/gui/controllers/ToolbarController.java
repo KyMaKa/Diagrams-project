@@ -10,9 +10,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 import logic.Objects.Objects;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -47,6 +51,12 @@ public class ToolbarController {
     this.pane = pane;
   }
 
+  private DrawController drawController;
+
+  public void setDrawController(DrawController drawController) {
+    this.drawController = drawController;
+  }
+
   @FXML
   public void onSaveButtonPressed() throws IOException {
 
@@ -77,6 +87,8 @@ public class ToolbarController {
           for (CustomLine rel : line) {
             Relationship relationship = new Relationship();
             //relationship.setParent(entity);
+            relationship.setParentX(key.getLayoutX());
+            relationship.setParentY(key.getLayoutY());
             relationship.setChildX(rel.getChildConnector().getLayoutX());
             relationship.setChildY(rel.getChildConnector().getLayoutY());
             relationship.setChild(new Entity(rel.getChild().getName()));
@@ -118,8 +130,53 @@ public class ToolbarController {
         rect.addText(attr.getName());
       }
 
+      for (Relationship rel : entity.getRelations()) {
+        rect.getRelations().forEach((key, value) -> {
+          if (key.getLayoutX() == rel.getParentX() && key.getLayoutY() == rel.getParentY()) {
+            Entity e = rel.getChild();
+            CustomRectangle child = new CustomRectangle(e.getPosX(), e.getPosY(), e.getWidth(), e.getHeight());
+            child.setName(e.getName());
+            Connector connector = new Connector();
+            connector.setParentName(e.getName());
+            connector.setLayoutX(rel.getChildX());
+            connector.setLayoutY(rel.getChildY());
+            CustomLine line = new CustomLine();
+            line.setChildConnector(connector);
+            line.setChild(child);
+
+            rect.addConnector(key, line);
+          }
+        });
+      }
 
       pane.getChildren().add(rect);
+    }
+
+    List<CustomRectangle> children = new LinkedList<>();
+    for (Node n : pane.getChildren().stream().toList()) {
+      children.add((CustomRectangle) n);
+    }
+
+    for(CustomRectangle source : children) {
+      Map<Connector, List<CustomLine>> rels = source.getRelations()
+          .entrySet()
+          .stream()
+          .collect(Collectors.toMap(Entry::getKey, e -> List.copyOf(e.getValue())));
+
+      source.getRelations().forEach((key, value) -> {
+        value.clear();
+      });
+
+      rels.forEach((key, value) -> {
+        for (CustomLine c : value) {
+          CustomRectangle tSource = children.stream().filter( node -> node.getName().equals(c.getChild().getName())).toList().get(0);
+          tSource.getRelations().forEach((conn, list) -> {
+            if (conn.getLayoutY() == c.getChildConnector().getLayoutY() && conn.getLayoutX() == c.getChildConnector().getLayoutX()) {
+              drawController.drawRelation(source, key, tSource, conn);
+            }
+          });
+        }
+      });
     }
 
   }
