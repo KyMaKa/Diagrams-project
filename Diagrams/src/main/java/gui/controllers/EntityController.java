@@ -32,6 +32,7 @@ public class EntityController {
   public void initialize(){
     drawController.setPane(this.pane);
     toolbarController.setPane(this.pane);
+    toolbarController.setDrawController(this.drawController);
   }
 
   public void addLine(MouseEvent mouseEvent) {
