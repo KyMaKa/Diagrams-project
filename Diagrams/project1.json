@@ -2,33 +2,61 @@
   "objects": [
     {
       "name": "1",
-      "attributes": [],
-      "relations": [],
-      "posX": 100.0,
-      "posY": 100.0,
-      "width": 150.0,
-      "height": 125.0
-    },
-    {
-      "name": "2",
-      "attributes": [],
+      "attributes": [
+        {
+          "name": "attribute"
+        },
+        {
+          "name": "attribute"
+        },
+        {
+          "name": "attribute"
+        }
+      ],
       "relations": [
         {
           "child": {
-            "name": "1",
+            "name": "2",
             "posX": 0.0,
             "posY": 0.0,
             "width": 0.0,
             "height": 0.0
           },
+          "parentX": 150.0,
+          "parentY": 82.5,
           "childX": 150.0,
-          "childY": 62.5
+          "childY": 102.5
         }
       ],
-      "posX": 90.0,
-      "posY": 301.0,
+      "posX": 187.0,
+      "posY": 134.0,
       "width": 150.0,
-      "height": 125.0
+      "height": 165.0
+    },
+    {
+      "name": "2",
+      "attributes": [
+        {
+          "name": "attribute"
+        },
+        {
+          "name": "attribute"
+        },
+        {
+          "name": "attribute"
+        },
+        {
+          "name": "attribute"
+        },
+        {
+          "name": "attribute"
+        }
+      ],
+      "relations": [],
+      "posX": 445.0,
+      "posY": 393.0,
+      "width": 150.0,
+      "height": 205.0
     }
   ]
 }
