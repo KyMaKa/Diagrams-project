@@ -37,13 +37,7 @@ public class DrawController {
       System.out.println("Clicked");
     } else {
       Node tSource = target.getParent();
-      CustomLine customLine = new CustomLine();
-      customLine.setLine(source, connector, tSource, target);
-      customLine.setChild((CustomRectangle) tSource);
-      customLine.setChildConnector((Connector) target);
-      source.addConnector((Connector) connector, customLine);
-      this.pane.getChildren().addAll(customLine, customLine.getParentText(), customLine.getChildText());
-      this.lines.add(customLine);
+      drawRelation(source, (Connector) connector, (CustomRectangle) tSource, (Connector) target);
       source = null;
       connector = null;
     }
@@ -65,5 +59,20 @@ public class DrawController {
     new DragController(rect, true);
     rect.setLineEvent(handler);
     pane.getChildren().add(rect);
+  }
+
+  public void drawEntity(CustomRectangle rect) {
+    new DragController(rect, true);
+    rect.setLineEvent(handler);
+    pane.getChildren().add(rect);
+  }
+
+  public void drawRelation(CustomRectangle source, Connector connector, CustomRectangle tSource, Connector target) {
+    CustomLine customLine = new CustomLine();
+    customLine.setLine(source, connector, tSource, target);
+    customLine.setChild(tSource);
+    customLine.setChildConnector(target);
+    source.addConnector(connector, customLine);
+    this.pane.getChildren().addAll(customLine, customLine.getParentText(), customLine.getChildText());
   }
 }
