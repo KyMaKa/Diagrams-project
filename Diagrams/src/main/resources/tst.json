@@ -1,0 +1,48 @@
+{
+  "objects": [
+    {
+      "name": "1",
+      "attributes": [
+        {
+          "name": "name"
+        },
+        {
+          "name": "relation"
+        }
+      ],
+      "relations": [],
+      "posX": 239.0,
+      "posY": 195.0,
+      "width": 150.0,
+      "height": 145.0
+    },
+    {
+      "name": "2",
+      "attributes": [
+        {
+          "name": "relationType"
+        },
+        {
+          "name": "poop"
+        }
+      ],
+      "relations": [
+        {
+          "child": {
+            "name": "1",
+            "posX": 0.0,
+            "posY": 0.0,
+            "width": 0.0,
+            "height": 0.0
+          },
+          "childX": 150.0,
+          "childY": 62.5
+        }
+      ],
+      "posX": 558.0,
+      "posY": 445.0,
+      "width": 150.0,
+      "height": 145.0
+    }
+  ]
+}
