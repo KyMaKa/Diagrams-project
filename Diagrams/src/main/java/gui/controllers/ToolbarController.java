@@ -2,6 +2,7 @@ package gui.controllers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import gui.shapes.AttributeGUI;
 import gui.shapes.Connector;
 import gui.shapes.CustomLine;
 import gui.shapes.CustomRectangle;
@@ -10,8 +11,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -73,9 +72,10 @@ public class ToolbarController {
         entity.setHeight(node.getHeight());
         entity.setWidth(node.getWidth());
         List<Attribute> attributes = new LinkedList<>();
-        for (TextField attr : node.getAttributes()) {
+        for (AttributeGUI attr : node.getAttributes()) {
           Attribute attribute = new Attribute();
-          attribute.setName(attr.getText());
+          attribute.setName(attr.getAttributeText());
+          attribute.setType(attr.getType());
           attributes.add(attribute);
         }
 
@@ -87,6 +87,7 @@ public class ToolbarController {
           for (CustomLine rel : line) {
             Relationship relationship = new Relationship();
             //relationship.setParent(entity);
+            relationship.setType(rel.getRelType());
             relationship.setParentX(key.getLayoutX());
             relationship.setParentY(key.getLayoutY());
             relationship.setChildX(rel.getChildConnector().getLayoutX());
@@ -124,10 +125,10 @@ public class ToolbarController {
       rect.setName(entity.getName());
       rect.setBackground(
           new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-      new DragController(rect, true);
+      //new DragController(rect, true);
 
       for (Attribute attr : entity.getAttributes()) {
-        rect.addText(attr.getName());
+        rect.addAttribute(attr.getName(), attr.getType());
       }
 
       for (Relationship rel : entity.getRelations()) {
@@ -143,13 +144,14 @@ public class ToolbarController {
             CustomLine line = new CustomLine();
             line.setChildConnector(connector);
             line.setChild(child);
+            line.setRelType(rel.getType());
 
             rect.addConnector(key, line);
           }
         });
       }
-
-      pane.getChildren().add(rect);
+      drawController.drawEntity(rect);
+      //pane.getChildren().add(rect);
     }
 
     List<CustomRectangle> children = new LinkedList<>();
@@ -172,7 +174,7 @@ public class ToolbarController {
           CustomRectangle tSource = children.stream().filter( node -> node.getName().equals(c.getChild().getName())).toList().get(0);
           tSource.getRelations().forEach((conn, list) -> {
             if (conn.getLayoutY() == c.getChildConnector().getLayoutY() && conn.getLayoutX() == c.getChildConnector().getLayoutX()) {
-              drawController.drawRelation(source, key, tSource, conn);
+              drawController.drawRelation(source, key, tSource, conn, c.getRelType());
             }
           });
         }
