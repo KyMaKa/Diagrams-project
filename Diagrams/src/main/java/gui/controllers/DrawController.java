@@ -17,6 +17,7 @@ import javafx.scene.paint.Color;
 import gui.shapes.Connector;
 import gui.shapes.CustomLine;
 import logic.types.RelTypes;
+import logic.validation.EntityNames;
 import logic.validation.PKvalidator;
 
 public class DrawController {
@@ -64,14 +65,19 @@ public class DrawController {
     CustomRectangle rect = new CustomRectangle(100, 100, 220, 125);
     rect.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY,
         Insets.EMPTY)));
-    new DragController(rect, true);
-    rect.setConnectorPressed(handler);
-    pane.getChildren().add(rect);
+    drawEntity(rect);
   }
 
   public void drawEntity(CustomRectangle rect) {
     new DragController(rect, true);
     rect.setConnectorPressed(handler);
+    if (EntityNames.entityNames.containsKey(rect.getName())) {
+      String newName = rect.getName() + EntityNames.entityNames.get(rect.getName());
+      EntityNames.entityNames.put(rect.getName(), EntityNames.entityNames.get(rect.getName()) + 1);
+      rect.setName(newName);
+      EntityNames.entityNames.put(newName, 1);
+    }
+    EntityNames.entityNames.put(rect.getName(), 1);
     pane.getChildren().add(rect);
   }
 
