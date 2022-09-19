@@ -1,7 +1,7 @@
-package logic.Objects;
+package logic.objects;
 
-import logic.Types.Annotations;
-import logic.Types.AttTypes;
+import logic.types.Annotations;
+import logic.types.AttTypes;
 
 public class Attribute {
 
@@ -9,7 +9,7 @@ public class Attribute {
 
   private AttTypes type;
 
-  private Annotations[] annotations;
+  private Annotations annotations;
 
   public String getName() {
     return this.name;
@@ -27,11 +27,11 @@ public class Attribute {
     this.type = type;
   }
 
-  public Annotations[] getAnnotations() {
+  public Annotations getAnnotations() {
     return this.annotations;
   }
 
-  public void setAnnotations(Annotations[] annotations) {
+  public void setAnnotations(Annotations annotations) {
     this.annotations = annotations;
   }
 
