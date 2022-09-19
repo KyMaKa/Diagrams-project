@@ -12,6 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import logic.validation.EntityNames;
 
 public class EntityController {
 
@@ -33,6 +34,7 @@ public class EntityController {
     drawController.setPane(this.pane);
     toolbarController.setPane(this.pane);
     toolbarController.setDrawController(this.drawController);
+    new EntityNames();
   }
 
   public void addLine(MouseEvent mouseEvent) {
