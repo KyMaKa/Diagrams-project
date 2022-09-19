@@ -10,13 +10,16 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import logic.Types.AttTypes;
+import logic.types.Annotations;
+import logic.types.AttTypes;
 
 public class AttributeGUI extends HBox {
 
   private TextField attribute;
 
   private ChoiceBox<AttTypes> types;
+
+  private ChoiceBox<Annotations> annotation;
 
   private Line line;
 
@@ -31,15 +34,17 @@ public class AttributeGUI extends HBox {
         Insets.EMPTY)));
     this.setPadding(new Insets(0, 10, 0, 10));
     this.setSpacing(15);
+    this.annotation = new ChoiceBox<>();
+    this.annotation.getItems().addAll(Annotations.values());
+    this.annotation.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+    this.annotation.setMaxWidth(40);
     this.attribute = new TextField("attribute");
-    this.attribute.setMaxWidth(65);
+    this.attribute.setMaxWidth(70);
     this.attribute.setAlignment(Pos.CENTER_LEFT);
     this.types = new ChoiceBox<>();
     this.types.getItems().addAll(AttTypes.values());
-    /*this.types.setScaleY(0.75);*/
     this.types.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-    //this.line = new Line(width / 2, 0, width / 2, height);
-    this.getChildren().addAll(attribute/*, line*/, types);
+    this.getChildren().addAll(annotation, attribute, types);
   }
 
   public void setAttributeText(String text) {
@@ -56,5 +61,13 @@ public class AttributeGUI extends HBox {
 
   public AttTypes getType() {
     return this.types.getValue();
+  }
+
+  public Annotations getAnnotation() {
+    return annotation.getValue();
+  }
+
+  public void setAnnotation(Annotations annotation) {
+    this.annotation.setValue(annotation);
   }
 }
