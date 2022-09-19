@@ -10,11 +10,14 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import logic.Types.AttTypes;
 
 public class CustomRectangle extends Pane {
 
@@ -22,13 +25,13 @@ public class CustomRectangle extends Pane {
 
   private final TextField name = new TextField("Entity");
 
-  private int attributeY = 20;
+  private int attributeY = 25;
   private Line secondLine;
 
   private Connector connector;
 
 
-  private final List<TextField> attributes = new LinkedList<>();
+  private final List<AttributeGUI> attributes = new LinkedList<>();
 
   private final Map<Connector, List<CustomLine>> relations = new HashMap<>();
 
@@ -38,6 +41,16 @@ public class CustomRectangle extends Pane {
     this.setLayoutX(x);
     this.setLayoutY(y);
     this.setPadding(new Insets(10, 0, 10, 0));
+    this.setOnContextMenuRequested(contextMenuEvent -> {
+      MenuItem deleteButton = new MenuItem("Delete");
+      deleteButton.setOnAction(actionEvent -> {
+
+      });
+      ContextMenu menu = new ContextMenu();
+      menu.getItems().add(deleteButton);
+      menu.show(this, contextMenuEvent.getScreenX(), contextMenuEvent.getScreenY());
+    });
+
     name.setLayoutX(0);
     name.setLayoutY(0);
     name.setAlignment(Pos.CENTER);
@@ -61,7 +74,7 @@ public class CustomRectangle extends Pane {
     addAttrButton = new Button();
     addAttrButton.setLayoutX((width) / 2 - 7);
     addAttrButton.setLayoutY(lineY * 2.75+ (20 * (height / lineY - tst)));
-    addAttrButton.setOnMouseClicked(mouseEvent -> addText("attribute"));
+    addAttrButton.setOnMouseClicked(mouseEvent -> addAttribute("attribute", null));
 
     connector = new Connector();
     connector.setLayoutX(width);
@@ -73,14 +86,6 @@ public class CustomRectangle extends Pane {
 
     this.relations.put(connector, new LinkedList<>());
 
-    //connector.addEventHandler(MouseEvent.MOUSE_PRESSED, lineEvent);
-
-    //name.layoutXProperty().bind(this.layoutXProperty().subtract(name.getLayoutBounds().getMinX()));
-    //name.layoutYProperty().bind(this.layoutYProperty().subtract(name.getLayoutBounds().getMinY()));
-    //underName.layoutXProperty().bind(this.layoutXProperty().subtract(underName.getLayoutBounds().getMinX()));
-    //underName.layoutYProperty().bind(this.layoutYProperty().subtract(underName.getLayoutBounds().getMinY()).add(lineY));
-    //secondLine.layoutXProperty().bind(this.layoutXProperty().subtract(secondLine.getLayoutBounds().getMinX()));
-    //secondLine.layoutYProperty().bind(this.layoutYProperty().subtract(secondLine.getLayoutBounds().getMinY()).add(lineY * 4));
 
     this.getChildren().add(connector);
     this.getChildren().add(name);
@@ -100,28 +105,33 @@ public class CustomRectangle extends Pane {
 
   public void addConnector(Connector source, CustomLine target) {
     this.relations.get(source).add(target);
-    System.out.println(relations.containsKey(source));
   }
 
-  public void setLineEvent(EventHandler<MouseEvent> handler) {
+  public void setConnectorPressed(EventHandler<MouseEvent> handler) {
     connector.addEventFilter(MouseEvent.MOUSE_PRESSED, handler);
   }
 
-  public void addText(String input) {
-    TextField text = new TextField(input);
-    text.setAlignment(Pos.CENTER);
-    text.setPrefWidth(150);
-    //text.setLayoutX(this.getWidth() / 2 - 15);
+  public void addAttribute(String input, AttTypes type) {
+    /*TextField text = new TextField(input);
+    //text.setAlignment(Pos.CENTER);
+    text.setPrefWidth(text.getLength() * 7);
+    text.setLayoutX((this.getWidth() / 2) - (text.getLength() * 3));
     text.setLayoutY(attributeY);
     attributeY += 20;
     this.getChildren().add(text);
-    this.attributes.add(text);
-    if (isOverlapping(text)) {
+    this.attributes.add(text);*/
+    AttributeGUI attribute = new AttributeGUI(0, attributeY, this.getWidth(), 15);
+    attribute.setAttributeText(input);
+    attribute.setType(type);
+    attributeY += 25;
+    this.getChildren().add(attribute);
+    this.attributes.add(attribute);
+    if (isOverlapping(attribute)) {
       this.addAttrButton.relocate(this.addAttrButton.getLayoutX(),
-          this.addAttrButton.getLayoutY() + 20);
-      this.setPrefSize(this.getWidth(), this.getHeight() + 20);
-      this.secondLine.setStartY(this.secondLine.getStartY() + 20);
-      this.secondLine.setEndY(this.secondLine.getEndY() + 20);
+          this.addAttrButton.getLayoutY() + 25);
+      this.setPrefSize(this.getWidth(), this.getHeight() + 25);
+      this.secondLine.setStartY(this.secondLine.getStartY() + 25);
+      this.secondLine.setEndY(this.secondLine.getEndY() + 25);
       this.connector.setLayoutY(this.getPrefHeight() / 2);
     }
   }
@@ -142,7 +152,7 @@ public class CustomRectangle extends Pane {
     return this.addAttrButton;
   }
 
-  public List<TextField> getAttributes() {
+  public List<AttributeGUI> getAttributes() {
     return this.attributes;
   }
 }
