@@ -4,17 +4,17 @@
       "name": "1",
       "attributes": [
         {
-          "name": "attribute"
+          "name": "name",
+          "type": "TEXT"
         },
         {
-          "name": "attribute"
-        },
-        {
-          "name": "attribute"
+          "name": "id",
+          "type": "INT"
         }
       ],
       "relations": [
         {
+          "type": "OneToOne",
           "child": {
             "name": "2",
             "posX": 0.0,
@@ -22,41 +22,25 @@
             "width": 0.0,
             "height": 0.0
           },
-          "parentX": 150.0,
-          "parentY": 82.5,
-          "childX": 150.0,
-          "childY": 102.5
+          "parentX": 160.0,
+          "parentY": 87.5,
+          "childX": 160.0,
+          "childY": 62.5
         }
       ],
-      "posX": 187.0,
-      "posY": 134.0,
-      "width": 150.0,
-      "height": 165.0
+      "posX": 101.0,
+      "posY": 101.0,
+      "width": 160.0,
+      "height": 175.0
     },
     {
       "name": "2",
-      "attributes": [
-        {
-          "name": "attribute"
-        },
-        {
-          "name": "attribute"
-        },
-        {
-          "name": "attribute"
-        },
-        {
-          "name": "attribute"
-        },
-        {
-          "name": "attribute"
-        }
-      ],
+      "attributes": [],
       "relations": [],
-      "posX": 445.0,
-      "posY": 393.0,
-      "width": 150.0,
-      "height": 205.0
+      "posX": 362.0,
+      "posY": 259.0,
+      "width": 160.0,
+      "height": 125.0
     }
   ]
 }
