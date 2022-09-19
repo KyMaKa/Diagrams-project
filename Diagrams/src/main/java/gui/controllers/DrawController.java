@@ -16,6 +16,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import gui.shapes.Connector;
 import gui.shapes.CustomLine;
+import logic.Types.RelTypes;
 
 public class DrawController {
 
@@ -37,7 +38,7 @@ public class DrawController {
       System.out.println("Clicked");
     } else {
       Node tSource = target.getParent();
-      drawRelation(source, (Connector) connector, (CustomRectangle) tSource, (Connector) target);
+      drawRelation(source, (Connector) connector, (CustomRectangle) tSource, (Connector) target, null);
       source = null;
       connector = null;
     }
@@ -53,26 +54,27 @@ public class DrawController {
   @FXML
   protected void onDrawButtonClick() {
 
-    CustomRectangle rect = new CustomRectangle(100, 100, 150, 125);
+    CustomRectangle rect = new CustomRectangle(100, 100, 160, 125);
     rect.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY,
         Insets.EMPTY)));
     new DragController(rect, true);
-    rect.setLineEvent(handler);
+    rect.setConnectorPressed(handler);
     pane.getChildren().add(rect);
   }
 
   public void drawEntity(CustomRectangle rect) {
     new DragController(rect, true);
-    rect.setLineEvent(handler);
+    rect.setConnectorPressed(handler);
     pane.getChildren().add(rect);
   }
 
-  public void drawRelation(CustomRectangle source, Connector connector, CustomRectangle tSource, Connector target) {
+  public void drawRelation(CustomRectangle source, Connector connector, CustomRectangle tSource, Connector target, RelTypes type) {
     CustomLine customLine = new CustomLine();
     customLine.setLine(source, connector, tSource, target);
     customLine.setChild(tSource);
     customLine.setChildConnector(target);
+    customLine.setRelType(type);
     source.addConnector(connector, customLine);
-    this.pane.getChildren().addAll(customLine, customLine.getParentText(), customLine.getChildText());
+    this.pane.getChildren().addAll(customLine, customLine.getRels(), customLine.getArrow2(), customLine.getArrow1());
   }
 }
