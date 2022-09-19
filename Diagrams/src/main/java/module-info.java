@@ -16,8 +16,8 @@ module gui {
   exports gui;
   exports gui.controllers;
   opens gui.controllers to javafx.fxml;
-  opens logic.Annotations to com.google.gson;
-  opens logic.Types to com.google.gson;
-  opens logic.Objects to com.google.gson;
+  opens logic.annotations to com.google.gson;
+  opens logic.types to com.google.gson;
+  opens logic.objects to com.google.gson;
   opens gui.shapes to com.google.gson;
 }
