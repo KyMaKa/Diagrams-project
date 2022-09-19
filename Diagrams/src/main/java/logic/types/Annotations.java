@@ -1,4 +1,4 @@
-package logic.Types;
+package logic.types;
 
 public enum Annotations {
   NOT_NULL,
