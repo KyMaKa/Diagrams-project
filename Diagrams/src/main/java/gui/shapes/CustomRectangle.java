@@ -17,7 +17,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import logic.Types.AttTypes;
+import logic.types.Annotations;
+import logic.types.AttTypes;
 
 public class CustomRectangle extends Pane {
 
@@ -53,6 +54,7 @@ public class CustomRectangle extends Pane {
 
     name.setLayoutX(0);
     name.setLayoutY(0);
+    name.setPrefWidth(width);
     name.setAlignment(Pos.CENTER);
 
     double tst = 6.25;
@@ -74,7 +76,7 @@ public class CustomRectangle extends Pane {
     addAttrButton = new Button();
     addAttrButton.setLayoutX((width) / 2 - 7);
     addAttrButton.setLayoutY(lineY * 2.75+ (20 * (height / lineY - tst)));
-    addAttrButton.setOnMouseClicked(mouseEvent -> addAttribute("attribute", null));
+    addAttrButton.setOnMouseClicked(mouseEvent -> addAttribute("attribute", null, null));
 
     connector = new Connector();
     connector.setLayoutX(width);
@@ -111,18 +113,11 @@ public class CustomRectangle extends Pane {
     connector.addEventFilter(MouseEvent.MOUSE_PRESSED, handler);
   }
 
-  public void addAttribute(String input, AttTypes type) {
-    /*TextField text = new TextField(input);
-    //text.setAlignment(Pos.CENTER);
-    text.setPrefWidth(text.getLength() * 7);
-    text.setLayoutX((this.getWidth() / 2) - (text.getLength() * 3));
-    text.setLayoutY(attributeY);
-    attributeY += 20;
-    this.getChildren().add(text);
-    this.attributes.add(text);*/
+  public void addAttribute(String input, AttTypes type, Annotations annotation) {
     AttributeGUI attribute = new AttributeGUI(0, attributeY, this.getWidth(), 15);
     attribute.setAttributeText(input);
     attribute.setType(type);
+    attribute.setAnnotation(annotation);
     attributeY += 25;
     this.getChildren().add(attribute);
     this.attributes.add(attribute);

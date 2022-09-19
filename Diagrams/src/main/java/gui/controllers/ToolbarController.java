@@ -16,22 +16,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
-import logic.Objects.Objects;
+import logic.objects.Objects;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import logic.Objects.Attribute;
-import logic.Objects.Entity;
-import logic.Objects.Relationship;
+import logic.objects.Attribute;
+import logic.objects.Entity;
+import logic.objects.Relationship;
 
 public class ToolbarController {
 
@@ -74,6 +73,7 @@ public class ToolbarController {
         List<Attribute> attributes = new LinkedList<>();
         for (AttributeGUI attr : node.getAttributes()) {
           Attribute attribute = new Attribute();
+          attribute.setAnnotations(attr.getAnnotation());
           attribute.setName(attr.getAttributeText());
           attribute.setType(attr.getType());
           attributes.add(attribute);
@@ -128,7 +128,7 @@ public class ToolbarController {
       //new DragController(rect, true);
 
       for (Attribute attr : entity.getAttributes()) {
-        rect.addAttribute(attr.getName(), attr.getType());
+        rect.addAttribute(attr.getName(), attr.getType(), attr.getAnnotations());
       }
 
       for (Relationship rel : entity.getRelations()) {
@@ -151,7 +151,6 @@ public class ToolbarController {
         });
       }
       drawController.drawEntity(rect);
-      //pane.getChildren().add(rect);
     }
 
     List<CustomRectangle> children = new LinkedList<>();
