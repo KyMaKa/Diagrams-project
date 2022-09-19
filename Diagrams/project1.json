@@ -1,46 +1,59 @@
 {
   "objects": [
     {
-      "name": "1",
+      "name": "Person",
       "attributes": [
         {
-          "name": "name",
-          "type": "TEXT"
+          "name": "id",
+          "type": "INT",
+          "annotations": "PK"
         },
         {
-          "name": "id",
-          "type": "INT"
+          "name": "name",
+          "type": "TEXT",
+          "annotations": "NOT_NULL"
         }
       ],
       "relations": [
         {
-          "type": "OneToOne",
+          "type": "OneToMany",
           "child": {
-            "name": "2",
+            "name": "Book",
             "posX": 0.0,
             "posY": 0.0,
             "width": 0.0,
             "height": 0.0
           },
-          "parentX": 160.0,
+          "parentX": 220.0,
           "parentY": 87.5,
-          "childX": 160.0,
-          "childY": 62.5
+          "childX": 220.0,
+          "childY": 87.5
         }
       ],
-      "posX": 101.0,
-      "posY": 101.0,
-      "width": 160.0,
+      "posX": 100.0,
+      "posY": 100.0,
+      "width": 220.0,
       "height": 175.0
     },
     {
-      "name": "2",
-      "attributes": [],
+      "name": "Book",
+      "attributes": [
+        {
+          "name": "id",
+          "type": "INT",
+          "annotations": "PK"
+        },
+        {
+          "name": "name",
+          "type": "TEXT",
+          "annotations": "NOT_NULL"
+        }
+      ],
       "relations": [],
-      "posX": 362.0,
-      "posY": 259.0,
-      "width": 160.0,
-      "height": 125.0
+      "posX": 382.0,
+      "posY": 350.0,
+      "width": 220.0,
+      "height": 175.0
     }
   ]
 }
