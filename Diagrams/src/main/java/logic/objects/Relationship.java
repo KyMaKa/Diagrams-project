@@ -1,6 +1,6 @@
-package logic.Objects;
+package logic.objects;
 
-import logic.Types.RelTypes;
+import logic.types.RelTypes;
 
 public class Relationship {
   private String name;

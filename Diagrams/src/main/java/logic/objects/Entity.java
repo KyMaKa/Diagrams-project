@@ -1,4 +1,4 @@
-package logic.Objects;
+package logic.objects;
 
 import java.util.List;
 
