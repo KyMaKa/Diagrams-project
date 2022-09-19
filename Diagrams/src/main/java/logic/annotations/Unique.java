@@ -1,4 +1,4 @@
-package logic.Annotations;
+package logic.annotations;
 
 public @interface Unique {
 
