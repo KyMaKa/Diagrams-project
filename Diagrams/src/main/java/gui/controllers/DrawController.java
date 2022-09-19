@@ -16,7 +16,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import gui.shapes.Connector;
 import gui.shapes.CustomLine;
-import logic.Types.RelTypes;
+import logic.types.RelTypes;
+import logic.validation.PKvalidator;
 
 public class DrawController {
 
@@ -32,13 +33,19 @@ public class DrawController {
 
   private final EventHandler<MouseEvent> handler = mouseEvent -> {
     Node target = (Node) mouseEvent.getTarget();
+    PKvalidator pKvalidator = new PKvalidator();
     if (source == null) {
       connector = target;
       source = (CustomRectangle) target.getParent();
       System.out.println("Clicked");
     } else {
       Node tSource = target.getParent();
-      drawRelation(source, (Connector) connector, (CustomRectangle) tSource, (Connector) target, null);
+      if (pKvalidator.validate(source, (CustomRectangle) tSource)) {
+        drawRelation(source, (Connector) connector, (CustomRectangle) tSource, (Connector) target,
+            null);
+      } else {
+        mouseEvent.consume();
+      }
       source = null;
       connector = null;
     }
@@ -54,7 +61,7 @@ public class DrawController {
   @FXML
   protected void onDrawButtonClick() {
 
-    CustomRectangle rect = new CustomRectangle(100, 100, 160, 125);
+    CustomRectangle rect = new CustomRectangle(100, 100, 220, 125);
     rect.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY,
         Insets.EMPTY)));
     new DragController(rect, true);
