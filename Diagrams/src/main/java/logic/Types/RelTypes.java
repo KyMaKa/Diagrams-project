@@ -1,6 +1,7 @@
 package logic.Types;
 
 public enum RelTypes {
-  ZeroOrOne,
-  One,
+  OneToOne,
+  OneToMany,
+  ManyToMany,
 }
