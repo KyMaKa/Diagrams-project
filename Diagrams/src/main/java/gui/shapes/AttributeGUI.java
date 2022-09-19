@@ -30,20 +30,20 @@ public class AttributeGUI extends HBox {
     this.setHeight(height);
     this.setPrefSize(width, height);
     this.setAlignment(Pos.CENTER);
-    this.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY,
+    this.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY,
         Insets.EMPTY)));
     this.setPadding(new Insets(0, 10, 0, 10));
     this.setSpacing(15);
     this.annotation = new ChoiceBox<>();
     this.annotation.getItems().addAll(Annotations.values());
-    this.annotation.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+    this.annotation.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
     this.annotation.setMaxWidth(40);
     this.attribute = new TextField("attribute");
     this.attribute.setMaxWidth(70);
     this.attribute.setAlignment(Pos.CENTER_LEFT);
     this.types = new ChoiceBox<>();
     this.types.getItems().addAll(AttTypes.values());
-    this.types.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+    this.types.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
     this.getChildren().addAll(annotation, attribute, types);
   }
 
