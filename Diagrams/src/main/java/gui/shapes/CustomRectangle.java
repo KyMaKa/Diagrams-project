@@ -165,19 +165,31 @@ public class CustomRectangle extends Pane {
     attribute.setAttributeText(input);
     attribute.setType(type);
     attribute.setAnnotation(annotation);
+    attribute.setContextMenu(mouseEvent -> deleteAttribute(attribute));
     attributeY += 25;
     this.getChildren().add(attribute);
     this.attributes.add(attribute);
     if (isOverlapping(attribute)) {
-      this.addAttrButton.relocate(this.addAttrButton.getLayoutX(),
-          this.addAttrButton.getLayoutY() + 25);
-      this.setPrefSize(this.getWidth(), this.getHeight() + 25);
-      this.secondLine.setStartY(this.secondLine.getStartY() + 25);
-      this.secondLine.setEndY(this.secondLine.getEndY() + 25);
-      this.connectorL.setLayoutY(this.getPrefHeight() / 2);
-      this.connectorR.setLayoutY(this.getPrefHeight() / 2);
-      this.connectorB.setLayoutY(this.getPrefHeight());
+      relocateNodes();
     }
+  }
+
+  public void deleteAttribute(AttributeGUI attribute) {
+    this.attributes.remove(attribute);
+    this.getChildren().remove(attribute);
+    attributeY -= 25;
+    relocateNodes();
+  }
+
+  private void relocateNodes() {
+    this.addAttrButton.relocate(this.addAttrButton.getLayoutX(),
+        this.addAttrButton.getLayoutY() + 25);
+    this.setPrefSize(this.getWidth(), this.getHeight() + 25);
+    this.secondLine.setStartY(this.secondLine.getStartY() + 25);
+    this.secondLine.setEndY(this.secondLine.getEndY() + 25);
+    this.connectorL.setLayoutY(this.getPrefHeight() / 2);
+    this.connectorR.setLayoutY(this.getPrefHeight() / 2);
+    this.connectorB.setLayoutY(this.getPrefHeight());
   }
 
   private boolean isOverlapping(Node other) {

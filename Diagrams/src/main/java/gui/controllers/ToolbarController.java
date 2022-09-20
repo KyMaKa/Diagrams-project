@@ -6,6 +6,7 @@ import gui.shapes.AttributeGUI;
 import gui.shapes.Connector;
 import gui.shapes.CustomLine;
 import gui.shapes.CustomRectangle;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -16,6 +17,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import logic.DLLbuilder;
 import logic.objects.Objects;
 import javafx.collections.ObservableList;
@@ -103,9 +106,17 @@ public class ToolbarController {
         objects.addObject(entity);
       }
     }
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Save project.");
+    fileChooser.setInitialFileName("project.json");
+    File file = fileChooser.showOpenDialog(this.pane.getScene().getWindow());
     Gson g = new GsonBuilder().setPrettyPrinting().create();
 
-    try (Writer writer = new FileWriter("project1.json")) {
+    if (file == null) {
+      file = new File("project.json");
+    }
+
+    try (Writer writer = new FileWriter(file)) {
       g.toJson(objects, writer);
     }
 
@@ -118,7 +129,13 @@ public class ToolbarController {
     Objects objects;
     this.pane.getChildren().clear();
     EntityNames.entityNames.clear();
-    try (Reader reader = new FileReader("project1.json")) {
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Open project.");
+    File file = fileChooser.showOpenDialog(this.pane.getScene().getWindow());
+    if (file == null) {
+      return;
+    }
+    try (Reader reader = new FileReader(file)) {
       objects = g.fromJson(reader, Objects.class);
     }
     List<Entity> entities = objects.getObjects();

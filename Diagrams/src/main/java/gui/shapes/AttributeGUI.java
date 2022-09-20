@@ -1,9 +1,19 @@
 package gui.shapes;
 
+import java.util.EventObject;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -21,8 +31,6 @@ public class AttributeGUI extends HBox {
 
   private ChoiceBox<Annotations> annotation;
 
-  private Line line;
-
   public AttributeGUI(double x, double y, double width, double height) {
     this.setLayoutX(x);
     this.setLayoutY(y);
@@ -34,6 +42,7 @@ public class AttributeGUI extends HBox {
         Insets.EMPTY)));
     this.setPadding(new Insets(0, 10, 0, 10));
     this.setSpacing(15);
+
     this.annotation = new ChoiceBox<>();
     this.annotation.getItems().addAll(Annotations.values());
     this.annotation.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -69,5 +78,14 @@ public class AttributeGUI extends HBox {
 
   public void setAnnotation(Annotations annotation) {
     this.annotation.setValue(annotation);
+  }
+
+  public void setContextMenu(EventHandler<MouseEvent> event) {
+    this.setOnContextMenuRequested(contextMenuEvent -> {
+      ContextMenu menu = new ContextMenu();
+      MenuItem delete = new MenuItem();
+      delete.addEventHandler(MouseEvent.MOUSE_PRESSED, event);
+      menu.getItems().add(delete);
+    });
   }
 }
