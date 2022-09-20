@@ -37,10 +37,4 @@ public class EntityController {
     new EntityNames();
   }
 
-  public void addLine(MouseEvent mouseEvent) {
-    Node n = (Node) mouseEvent.getSource();
-    System.out.println(n.getParent());
-    this.pane.getEventDispatcher();
-  }
-
 }
