@@ -1,57 +1,90 @@
 {
   "objects": [
     {
-      "name": "Person",
+      "name": "Entity",
       "attributes": [
         {
-          "name": "id",
-          "type": "INT",
+          "name": "attribute",
           "annotations": "PK"
         },
         {
-          "name": "name",
-          "type": "TEXT",
-          "annotations": "NOT_NULL"
+          "name": "attribute"
+        },
+        {
+          "name": "attribute"
+        },
+        {
+          "name": "attribute"
+        },
+        {
+          "name": "attribute"
         }
       ],
       "relations": [
         {
           "type": "OneToMany",
           "child": {
-            "name": "Book",
+            "name": "Entity2",
+            "posX": 0.0,
+            "posY": 0.0,
+            "width": 0.0,
+            "height": 0.0
+          },
+          "parentX": 110.0,
+          "parentY": 250.0,
+          "childX": 110.0,
+          "childY": 0.0
+        }
+      ],
+      "posX": 536.0,
+      "posY": 28.0,
+      "width": 220.0,
+      "height": 250.0
+    },
+    {
+      "name": "Entity1",
+      "attributes": [
+        {
+          "name": "attribute",
+          "annotations": "PK"
+        }
+      ],
+      "relations": [
+        {
+          "type": "OneToOne",
+          "child": {
+            "name": "Entity",
             "posX": 0.0,
             "posY": 0.0,
             "width": 0.0,
             "height": 0.0
           },
           "parentX": 220.0,
-          "parentY": 87.5,
-          "childX": 220.0,
-          "childY": 87.5
+          "parentY": 75.0,
+          "childX": 0.0,
+          "childY": 125.0
         }
       ],
-      "posX": 100.0,
-      "posY": 100.0,
+      "posX": 133.0,
+      "posY": 226.0,
       "width": 220.0,
-      "height": 175.0
+      "height": 150.0
     },
     {
-      "name": "Book",
+      "name": "Entity2",
       "attributes": [
         {
-          "name": "id",
-          "type": "INT",
+          "name": "attribute",
           "annotations": "PK"
         },
         {
-          "name": "name",
-          "type": "TEXT",
-          "annotations": "NOT_NULL"
+          "name": "attribute",
+          "annotations": "FK"
         }
       ],
       "relations": [],
-      "posX": 382.0,
-      "posY": 350.0,
+      "posX": 606.0,
+      "posY": 471.0,
       "width": 220.0,
       "height": 175.0
     }
