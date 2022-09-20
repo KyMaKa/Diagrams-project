@@ -1,6 +1,8 @@
 package gui.shapes;
 
 import javafx.beans.InvalidationListener;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
@@ -19,10 +21,18 @@ public class CustomLine extends Line {
 
   private final ChoiceBox<RelTypes> relType = new ChoiceBox<>();
 
+  private CustomRectangle parent;
   private CustomRectangle child;
 
   private Connector childConnector;
 
+  public CustomRectangle getParentRect() {
+    return parent;
+  }
+
+  public void setParentRect(CustomRectangle parent) {
+    this.parent = parent;
+  }
 
   public void setChild(CustomRectangle child) {
     this.child = child;
