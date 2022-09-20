@@ -4,14 +4,19 @@
 <?import javafx.scene.text.*?>
 
 <ToolBar fx:id="toolBar" prefHeight="11.0" prefWidth="1171.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.ToolbarController">
-  <Button id="load" mnemonicParsing="false" text="Load" onAction="#onLoadButtonPressed" >
+  <Button id="load" mnemonicParsing="false" onAction="#onLoadButtonPressed" text="Load">
     <font>
       <Font name="JetBrains Mono Bold" size="12.0" />
     </font>
   </Button>
-  <Button fx:id="save" mnemonicParsing="false" text="Save" onAction="#onSaveButtonPressed" >
+  <Button fx:id="save" mnemonicParsing="false" onAction="#onSaveButtonPressed" text="Save">
     <font>
       <Font name="JetBrains Mono Bold" size="12.0" />
     </font>
   </Button>
+   <Button fx:id="createDLL" mnemonicParsing="false" onAction="#onCreateDLLButtonPressed" text="Create DLL">
+     <font>
+       <Font name="JetBrains Mono Bold" size="12.0" />
+     </font>
+   </Button>
 </ToolBar>
