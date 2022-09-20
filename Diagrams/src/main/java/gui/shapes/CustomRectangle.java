@@ -1,5 +1,6 @@
 package gui.shapes;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,9 +11,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -29,12 +29,21 @@ public class CustomRectangle extends Pane {
   private int attributeY = 25;
   private Line secondLine;
 
-  private Connector connector;
+  private Connector connectorL;
 
+  private Connector connectorR;
+
+  private Connector connectorT;
+
+  private Connector connectorB;
+
+  private final List<Connector> connectors = new LinkedList<>();
 
   private final List<AttributeGUI> attributes = new LinkedList<>();
 
   private final Map<Connector, List<CustomLine>> relations = new HashMap<>();
+
+  private final List<CustomLine> parents = new LinkedList<>();
 
   public CustomRectangle(double x, double y, double width, double height) {
     this(width, height);
@@ -42,14 +51,8 @@ public class CustomRectangle extends Pane {
     this.setLayoutX(x);
     this.setLayoutY(y);
     this.setPadding(new Insets(10, 0, 10, 0));
-    this.setOnContextMenuRequested(contextMenuEvent -> {
-      MenuItem deleteButton = new MenuItem("Delete");
-      deleteButton.setOnAction(actionEvent -> {
-
-      });
-      ContextMenu menu = new ContextMenu();
-      menu.getItems().add(deleteButton);
-      menu.show(this, contextMenuEvent.getScreenX(), contextMenuEvent.getScreenY());
+    this.setOnMouseClicked(mouseEvent -> {
+      this.requestFocus();
     });
 
     name.setLayoutX(0);
@@ -78,18 +81,50 @@ public class CustomRectangle extends Pane {
     addAttrButton.setLayoutY(lineY * 2.75+ (20 * (height / lineY - tst)));
     addAttrButton.setOnMouseClicked(mouseEvent -> addAttribute("attribute", null, null));
 
-    connector = new Connector();
-    connector.setLayoutX(width);
-    connector.setLayoutY(height / 2);
-    connector.setRadius(5);
-    connector.setParentName(this.name.getText());
-    connector.setxInParent(connector.getLayoutX());
-    connector.setyInParent(connector.getLayoutY());
+    connectorL = new Connector();
+    connectorL.setLayoutX(width);
+    connectorL.setLayoutY(height / 2);
+    connectorL.setRadius(5);
+    connectorL.setParentName(this.name.getText());
+    connectorL.setxInParent(connectorL.getLayoutX());
+    connectorL.setyInParent(connectorL.getLayoutY());
 
-    this.relations.put(connector, new LinkedList<>());
+    connectorR = new Connector();
+    connectorR.setLayoutX(0);
+    connectorR.setLayoutY(height / 2);
+    connectorR.setRadius(5);
+    connectorR.setParentName(this.name.getText());
+    connectorR.setxInParent(connectorR.getLayoutX());
+    connectorR.setyInParent(connectorR.getLayoutY());
+
+    connectorB = new Connector();
+    connectorB.setLayoutX(width / 2);
+    connectorB.setLayoutY(height);
+    connectorB.setRadius(5);
+    connectorB.setParentName(this.name.getText());
+    connectorB.setxInParent(connectorB.getLayoutX());
+    connectorB.setyInParent(connectorB.getLayoutY());
+
+    connectorT = new Connector();
+    connectorT.setLayoutX(width / 2);
+    connectorT.setLayoutY(0);
+    connectorT.setRadius(5);
+    connectorT.setParentName(this.name.getText());
+    connectorT.setxInParent(connectorT.getLayoutX());
+    connectorT.setyInParent(connectorT.getLayoutY());
+
+    connectors.add(connectorB);
+    connectors.add(connectorR);
+    connectors.add(connectorT);
+    connectors.add(connectorL);
+
+    this.relations.put(connectorL, new LinkedList<>());
+    this.relations.put(connectorB, new LinkedList<>());
+    this.relations.put(connectorR, new LinkedList<>());
+    this.relations.put(connectorT, new LinkedList<>());
 
 
-    this.getChildren().add(connector);
+    this.getChildren().addAll(connectorL, connectorB, connectorR, connectorT);
     this.getChildren().add(name);
     this.getChildren().add(underName);
     this.getChildren().add(secondLine);
@@ -105,12 +140,24 @@ public class CustomRectangle extends Pane {
     return this.relations;
   }
 
+  public List<CustomLine> getParents() {
+    return this.parents;
+  }
+
+  public void addParent(CustomLine target) {
+    this.parents.add(target);
+  }
+
   public void addConnector(Connector source, CustomLine target) {
     this.relations.get(source).add(target);
   }
 
+  public void setDeleteEvent(EventHandler<KeyEvent> handler) {
+    this.setOnKeyPressed(handler);
+  }
+
   public void setConnectorPressed(EventHandler<MouseEvent> handler) {
-    connector.addEventFilter(MouseEvent.MOUSE_PRESSED, handler);
+    this.connectors.forEach(connector -> connector.addEventFilter(MouseEvent.MOUSE_PRESSED, handler));
   }
 
   public void addAttribute(String input, AttTypes type, Annotations annotation) {
@@ -127,7 +174,9 @@ public class CustomRectangle extends Pane {
       this.setPrefSize(this.getWidth(), this.getHeight() + 25);
       this.secondLine.setStartY(this.secondLine.getStartY() + 25);
       this.secondLine.setEndY(this.secondLine.getEndY() + 25);
-      this.connector.setLayoutY(this.getPrefHeight() / 2);
+      this.connectorL.setLayoutY(this.getPrefHeight() / 2);
+      this.connectorR.setLayoutY(this.getPrefHeight() / 2);
+      this.connectorB.setLayoutY(this.getPrefHeight());
     }
   }
 
