@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
+import logic.DLLbuilder;
 import logic.objects.Objects;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -182,6 +183,17 @@ public class ToolbarController {
       });
     }
 
+  }
+
+  @FXML
+  public void onCreateDLLButtonPressed() throws IOException {
+    List<CustomRectangle> nodes = pane.getChildren()
+        .stream()
+        .filter(node -> node.getClass() == CustomRectangle.class)
+        .map(CustomRectangle.class::cast)
+        .toList();
+    DLLbuilder dlLbuilder = new DLLbuilder(nodes);
+    dlLbuilder.build();
   }
 
 }
