@@ -1,0 +1,8 @@
+CREATE DATABASE umls;
+\c umls
+CREATE TABLE user (
+id INT PRIMARY KEY); 
+CREATE TABLE review (
+id INT PRIMARY KEY,
+ user_id INT FOREIGN KEY,
+ FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE); 
